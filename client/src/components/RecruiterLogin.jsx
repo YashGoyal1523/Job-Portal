@@ -1,21 +1,66 @@
-import React, { use, useContext, useEffect, useState } from 'react'
+import React, {  useContext, useEffect, useState } from 'react'
 import { assets } from '../assets/assets'
 import { AppContext } from '../context/AppContext'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+
 
 const RecruiterLogin = () => {
 const [state,setState] = useState('Login')
 const [name,setName]=useState('')
 const [password,setPassword] = useState('')
 const [email,setEmail] = useState('')
-const [image,setImage] = useState(false)
+const [image,setImage] = useState(null)
 const [isTextDataSubmitted,setIsTextDataSubmited]=useState(false)
-const {setShowRecruiterLogin} =useContext(AppContext)
+const {setShowRecruiterLogin,backendUrl,setCompanyToken,setCompanyData} =useContext(AppContext)
+const navigate=useNavigate()
+
 
 const onSubmitHandler=async (e)=>{
     e.preventDefault()
 
     if(state==='Sign Up' && !isTextDataSubmitted){
-        setIsTextDataSubmited(true)
+       return setIsTextDataSubmited(true)
+    }
+
+    try{
+        if(state==="Login"){
+            const {data} = await axios.post(backendUrl+'/api/company/login',{email,password})
+            if(data.success){
+                setCompanyData(data.company)
+                setCompanyToken(data.token)
+                localStorage.setItem('companyToken',data.token) // localstorage m save krre -> page refresh pe loggedin rhe 
+                setShowRecruiterLogin(false)
+                navigate('/dashboard')
+            }
+            else{
+                toast.error(data.message)
+            }
+        }
+        else{
+            const formData = new FormData() //FormData object banayege as we need to pass file datatype also
+            formData.append('name',name)
+            formData.append('password',password)
+            formData.append('email',email)
+            formData.append('image',image)
+
+            const {data} = await axios.post(backendUrl+'/api/company/register',formData)
+
+            if(data.success){
+                setCompanyData(data.company)
+                setCompanyToken(data.token)
+                localStorage.setItem('companyToken',data.token) // localstorage m save krre -> page refresh pe loggedin rhe 
+                setShowRecruiterLogin(false)
+                navigate('/dashboard')
+            }
+            else{
+                toast.error(data.message)
+            }
+        }
+    }
+    catch(e){
+        toast.error(e.message)
     }
 }
 
@@ -37,7 +82,7 @@ useEffect(()=>{
             <>
             <div className='flex items-center gap-4 my-10'>
                 <label htmlFor="image">
-                    <img className='w-16 rounded-full' src={image? URL.createObjectURL(image):assets.upload_area} alt="" />
+                    <img className='w-16 rounded-full' src={image  ? URL.createObjectURL(image):assets.upload_area} alt="" />
                     <input onChange={e=>setImage(e.target.files[0])} type="file" id="image" hidden />
                 </label>
                 <p>Upload Company <br /> Logo </p>
@@ -65,7 +110,7 @@ useEffect(()=>{
             {state==='Login' && <p className='text-sm text-blue-600 mt-4 cursor-pointer'>Forgot Password?</p> }
            
            
-            <button type='submit' className='bg-blue-600 w-full text-white py-2  rounded-full mt-4'>
+            <button type='submit' className='bg-blue-600 w-full text-white py-2  rounded-full mt-4 cursor-pointer'>
                 {state==='Login' ? 'Login' :isTextDataSubmitted ?'Create Account' : 'Next'}
             </button>
 
