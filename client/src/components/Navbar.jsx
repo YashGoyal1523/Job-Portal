@@ -3,10 +3,12 @@ import { assets } from '../assets/assets'
 import {useClerk,useUser,UserButton} from '@clerk/clerk-react'
 import { Link,useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
+import { FaUserTie } from 'react-icons/fa';
 
 const Navbar = () => {
 
 const {openSignIn}=useClerk();
+
 const {user}=useUser()
 
 const navigate=useNavigate()
@@ -16,21 +18,32 @@ const {setShowRecruiterLogin}=useContext(AppContext)
   return (
     <div className='shadow py-4'>
         <div className='container px-4 2xl:px-20 mx-auto flex justify-between items-center '>
-            <img onClick={()=>navigate('/')} className='cursor-pointer' src={assets.logo} alt="" />
-            {
-                user?
-                <div className='flex items-center gap-3'>
+
+                    <div onClick={() => navigate('/')} className="flex items-center gap-2 cursor-pointer">
+                        <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                          <FaUserTie className="text-white text-[14px]" />
+                        </div>
+                         <h1 className="text-[28px] font-bold tracking-wide">
+                         <span className="text-black">Job</span><span className="text-gray-600">ify</span>
+                         </h1>
+                    </div>
+
+                     { user?
+
+                   <div className='flex items-center gap-3'>
                     <Link to={'/applications'}>Applied Jobs</Link>
                     <p>|</p>
                     <p className='max-sm:hidden'>Hi, {user.firstName+" "+user.lastName}</p>
                     <UserButton/>
-                </div>
+                   </div>
                 :
             <div className='flex gap-4 max-sm:text-xs'>
                 <button onClick={e=> setShowRecruiterLogin(true)} className='text-gray-600 '>Recruiter Login</button>
                 <button onClick={openSignIn} className='bg-blue-600 text-white px-6 sm:px-9 py-2 hover:bg-blue-700 rounded-full'>Login</button>
             </div>
+
             }
+
         </div>
     </div>
   )

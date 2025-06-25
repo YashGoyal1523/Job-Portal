@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import { v2 as cloudinary } from "cloudinary"
 import generatetoken from "../utils/generateToken.js"
 import Job from "../models/Job.js"
+import JobApplication from "../models/JobApplication.js"
 
 //register a new company
 export const registerCompany=async(req,res)=>{
@@ -124,7 +125,19 @@ export const postJob = async (req,res)=>{
 }
 //get company job applicants
 export const getCompanyJobApplicants = async (req,res)=>{
+    try{
+        const companyId=req.company._id
+        //find job applications for the user and populate related data
+        const applications=await JobApplication.find({companyId})
+        .populate('userId','name image resume')
+        .populate('jobId','title location category level salary')
+        .exec()
 
+        return res.json({success:true,applications})
+    }
+    catch(e){
+        res.json({success:false,message:e.message})
+    }
 }
 //get company posted jobs
 export const getCompanyPostedJobs = async (req,res)=>{
@@ -132,8 +145,14 @@ export const getCompanyPostedJobs = async (req,res)=>{
     const companyId=req.company._id
     const jobs=await Job.find({companyId})
 
-    //(todo) adding no of applicants info in data
-    res.json({success:true,jobsData:jobs})
+    // adding no of applicants info in data
+    const jobsData= await Promise.all( jobs.map(async (job)=>{
+        const applicants=await JobApplication.find({jobId:job._id})
+        return {...job.toObject(),applicants:applicants.length}
+    }))
+
+
+    res.json({success:true,jobsData})
  }
  catch(e){
     res.json({success:false,message:e.message})
@@ -141,7 +160,17 @@ export const getCompanyPostedJobs = async (req,res)=>{
 }
 //change job application status
 export const ChangeJobApplicationStatus= async (req,res)=>{
+  
+    try{
+  const {id,status} =req.body
+    //find job application data and update status
+    await JobApplication.findOneAndUpdate({_id:id},{status:status})
 
+    res.json({success:true,message:"Status changed"})
+    }
+    catch(e){
+        res.json({success:false,message:e.message})
+    }
 }
 //change job visibility
 export const changeVisibility=async(req,res)=>{
@@ -162,3 +191,27 @@ export const changeVisibility=async(req,res)=>{
         res.json({success:false,message:e.message})
     }
 }
+
+//delete a job
+export const deleteJob = async (req, res) => {
+  try {
+    const  id  = req.query.id;
+    const companyId = req.company._id;
+
+    const job = await Job.findById(id);
+    if (!job) return res.json({ success: false, message: 'Job not found' });
+
+    // Check if the job belongs to the requesting company
+    if (companyId.toString() !== job.companyId.toString()) {
+      return res.json({ success: false, message: 'Unauthorized' });
+    }
+
+    // Delete job and related job applications
+    await Job.findByIdAndDelete(id);
+    await JobApplication.deleteMany({ jobId: id });
+
+    res.json({ success: true, message: 'Job deleted successfully' });
+  } catch (e) {
+    res.json({ success: false, message: e.message });
+  }
+};

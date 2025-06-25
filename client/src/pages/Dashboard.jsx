@@ -1,14 +1,30 @@
-import React from 'react'
-import { NavLink, Outlet,useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { NavLink, Outlet,useNavigate,useLocation  } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { useContext } from 'react'
 import { AppContext } from '../context/AppContext'
 
+
 const Dashboard = () => {
 
     const navigate=useNavigate()
+    const location=useLocation()
 
-    const {companyData} = useContext(AppContext)
+    const {companyData,setCompanyData,setCompanyToken} = useContext(AppContext)
+
+//func to logout for company
+const logout=()=>{
+  setCompanyToken(null)
+  localStorage.removeItem('companyToken')
+  setCompanyData(null)
+}
+
+//redirect to manage-jobs path on dashboard path
+useEffect(()=>{
+  if(location.pathname==="/dashboard"){
+    navigate('/dashboard/manage-jobs')
+  }
+},[location.pathname])
 
 
   return (
@@ -25,7 +41,7 @@ const Dashboard = () => {
                 <img className='w-8 border rounded-full' src={companyData.image} alt="" />
                 <div className='absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12'>
                     <ul className='list-none m-0 p-2 bg-white rounded-md border text-sm'>
-                        <li className='py-1 px-2 cursor-pointer pr-10'>Logout</li>
+                        <li onClick={logout} className='py-1 px-2 cursor-pointer pr-10'>Logout</li>
                     </ul>
                 </div>
             </div>
@@ -40,10 +56,6 @@ const Dashboard = () => {
        {/* leftside bar   */}
     <div className='inline-block min-h-screen border-r-2 border-gray-200'>
       <ul className='flex flex-col items-start pt-5 text-gray-800'>
-        <NavLink className={({isActive})=>`flex items-center p-3 sm:px-6 gap-2 w-full hover-bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dashboard/add-job'}>
-            <img className='min-w-4' src={assets.add_icon} alt="" />
-            <p className='max-sm:hidden'>Add Job</p>
-        </NavLink>
           <NavLink className={({isActive})=>`flex items-center p-3 sm:px-6 gap-2 w-full hover-bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dashboard/manage-jobs'}>
             <img className='min-w-4' src={assets.home_icon} alt="" />
             <p className='max-sm:hidden'>Manage Jobs</p>
@@ -52,11 +64,15 @@ const Dashboard = () => {
             <img className='min-w-4' src={assets.person_tick_icon} alt="" />
             <p className='max-sm:hidden'>View Applications</p>
         </NavLink>
+        <NavLink className={({isActive})=>`flex items-center p-3 sm:px-6 gap-2 w-full hover-bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dashboard/add-job'}>
+            <img className='min-w-4' src={assets.add_icon} alt="" />
+            <p className='max-sm:hidden'>Add Job</p>
+        </NavLink>
       </ul>
     </div>
 
     {/* right section */}
-    <div>
+    <div className='flex-1 h-full p-2 sm:p-5'>
         <Outlet/>
     </div>
 
