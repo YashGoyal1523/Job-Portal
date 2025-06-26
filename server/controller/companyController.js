@@ -39,7 +39,7 @@ export const registerCompany=async(req,res)=>{
                 email:company.email,
                 image:company.image
             },
-            message:"Registered Succesfully",
+            message:"Registered Successfully",
             token:generatetoken(company._id)
         })
         }
