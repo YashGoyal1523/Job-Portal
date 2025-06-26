@@ -6,6 +6,7 @@ import { v2 as cloudinary } from "cloudinary"
 //get user data
 export const getUserData=async(req,res)=>{
     const {userId}= await req.auth() 
+    
     try{
         const user= await User.findById(userId)
         if(!user){
