@@ -33,6 +33,7 @@ const onSubmitHandler=async (e)=>{
                 localStorage.setItem('companyToken',data.token) // localstorage m save krre -> page refresh pe loggedin rhe 
                 setShowRecruiterLogin(false)
                 navigate('/dashboard')
+                toast.success(data.message)
             }
             else{
                 toast.error(data.message)
@@ -53,6 +54,7 @@ const onSubmitHandler=async (e)=>{
                 localStorage.setItem('companyToken',data.token) // localstorage m save krre -> page refresh pe loggedin rhe 
                 setShowRecruiterLogin(false)
                 navigate('/dashboard')
+                toast.success(data.message)
             }
             else{
                 toast.error(data.message)
@@ -76,7 +78,8 @@ useEffect(()=>{
     <div className='absolute top-0 left-0 right-0 bottom-0 z-10 backdrop-blur-sm bg-black/30 flex justify-center items-center'>
         <form onSubmit={onSubmitHandler} className='relative bg-white p-10 rounded-xl text-slate-500 '>
             <h1 className='text-center text-2xl text-neutral-700 font-medium'>Recruiter {state}</h1>
-            <p className='text-sm'>Welcome back! Please sign in to continue</p>
+            {state==='Login'?<p className='text-sm'>Welcome back! Please sign in to continue</p> : <p className='text-sm text-center'>Please sign up to continue</p>}
+
 
             {state==='Sign Up'&&isTextDataSubmitted ? 
             <>
@@ -90,7 +93,9 @@ useEffect(()=>{
             </>
             :
             <>
-            {state!=='Login' && (<div className='border px-4 py-2 flex items-center gap-2 rounded-full mt-5'>
+            {state!=='Login' && (
+                
+                <div className='border px-4 py-2 flex items-center gap-2 rounded-full mt-5'>
                 <img src={assets.person_icon} alt="" />
                 <input className='outline-none text-sm' onChange={e=>setName(e.target.value)} value={name} type="text" placeholder='Company Name' required/>
             </div>)}

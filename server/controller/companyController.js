@@ -39,6 +39,7 @@ export const registerCompany=async(req,res)=>{
                 email:company.email,
                 image:company.image
             },
+            message:"Registered Succesfully",
             token:generatetoken(company._id)
         })
         }
@@ -71,6 +72,7 @@ export const loginCompany=async(req,res)=>{
                 email:company.email,
                 image:company.image
             },
+             message:"Logged in Successfully",
              token:generatetoken(company._id)
         })
        } 
