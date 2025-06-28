@@ -13,7 +13,7 @@ const Footer = () => {
           <span className="text-black">Job</span><span className="text-gray-600">ify</span>
         </h1>
       </div>
-        <p className='flex-1 border-l border-gray-400 pl-4 text-sm text-gray-500 max-sm:hidden'>Copyright @YashGoyal | All right reserved.</p>
+        <p className='flex-1 border-l border-gray-400 pl-4 text-sm text-gray-500 max-sm:hidden'>Copyright @YashGoyal | All rights reserved.</p>
         <div className='flex gap-2.5'>
             <img width={38} src={assets.facebook_icon} alt="" />
             <img width={38} src={assets.twitter_icon} alt="" />
