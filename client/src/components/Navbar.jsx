@@ -38,8 +38,8 @@ const {setShowRecruiterLogin}=useContext(AppContext)
                    </div>
                 :
             <div className='flex gap-4 max-sm:text-xs'>
-                <button onClick={e=> setShowRecruiterLogin(true)} className='text-gray-600 cursor-pointer'>Recruiter Login</button>
-                <button onClick={openSignIn} className='bg-blue-600 text-white px-6 sm:px-9 py-2 hover:bg-blue-700 rounded-full cursor-pointer'>Login</button>
+               <button onClick={() => setShowRecruiterLogin(true)}className='bg-gray-200 text-gray-700 px-6 sm:px-9 py-2 hover:bg-gray-300 rounded-full cursor-pointer'>Recruiter Login</button>
+                <button onClick={openSignIn} className='bg-blue-600 text-white px-6 sm:px-9 py-2 hover:bg-blue-700 rounded-full cursor-pointer'>User Login</button>
             </div>
 
             }
