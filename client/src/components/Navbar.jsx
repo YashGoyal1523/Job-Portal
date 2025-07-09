@@ -20,10 +20,10 @@ const {setShowRecruiterLogin}=useContext(AppContext)
         <div className='container px-4 2xl:px-20 mx-auto flex justify-between items-center '>
 
                     <div onClick={() => navigate('/')} className="flex items-center gap-2 cursor-pointer">
-                        <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
                           <FaUserTie className="text-white text-[14px]" />
                         </div>
-                         <h1 className="text-[28px] font-bold tracking-wide">
+                         <h1 className="text-[32px] font-bold tracking-wide">
                          <span className="text-black">Job</span><span className="text-gray-600">ify</span>
                          </h1>
                     </div>
