@@ -3,7 +3,7 @@ import { NavLink, Outlet,useNavigate,useLocation  } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { useContext } from 'react'
 import { AppContext } from '../context/AppContext'
-
+import { FaUserTie } from 'react-icons/fa';
 
 const Dashboard = () => {
 
@@ -32,8 +32,15 @@ useEffect(()=>{
        {/* Navbar for recruiter panel */}
        <div className='shadow py-4'>
         <div className='px-5 flex justify-between items-center'>
-        <img onClick={()=>navigate('/')} className='max-sm:w-32 cursor-pointer' src={assets.logo} alt="" />
-       
+        <div onClick={() => navigate('/')} className="flex items-center gap-2 sm:gap-3 cursor-pointer">
+                                   <div className="w-7 h-7 sm:w-10 sm:h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                                       <FaUserTie className="text-white text-[13px] sm:text-[16px]" />
+                                    </div>
+                                      <h1 className="text-[23px] sm:text-[30px] font-bold tracking-wide leading-none">
+                                        <span className="text-black">Job</span>
+                                         <span className="text-gray-600">ify</span>
+                                       </h1>
+                              </div>
          {companyData && (     
             <div className='flex items-center gap-3'>
             <p className='max-sm:hidden'>Hi,{companyData.name}</p>

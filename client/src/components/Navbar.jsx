@@ -27,7 +27,8 @@ const {setShowRecruiterLogin}=useContext(AppContext)
                                 <span className="text-black">Job</span>
                                  <span className="text-gray-600">ify</span>
                                </h1>
-                              </div>
+                      </div>
+                      
                      { user?
 
                    <div className='flex items-center gap-3'>
