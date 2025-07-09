@@ -20,14 +20,14 @@ const {setShowRecruiterLogin}=useContext(AppContext)
         <div className='container px-4 2xl:px-20 mx-auto flex justify-between items-center '>
 
                     <div onClick={() => navigate('/')} className="flex items-center gap-2 sm:gap-3 cursor-pointer">
-                          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                              <FaUserTie className="text-white text-[12px] sm:text-[14px]" />
-                          </div>
-                            <h1 className="text-xl sm:text-[34px] font-bold tracking-wide leading-none">
-                             <span className="text-black">Job</span>
-                             <span className="text-gray-600">ify</span>
-                            </h1>
-                          </div>
+  <div className="w-9 h-9 sm:w-11 sm:h-11 bg-blue-600 rounded-full flex items-center justify-center">
+    <FaUserTie className="text-white text-[15px] sm:text-[16px]" />
+  </div>
+  <h1 className="text-[25px] sm:text-[34px] font-bold tracking-wide leading-none">
+    <span className="text-black">Job</span>
+    <span className="text-gray-600">ify</span>
+  </h1>
+</div>
                      { user?
 
                    <div className='flex items-center gap-3'>
@@ -37,9 +37,9 @@ const {setShowRecruiterLogin}=useContext(AppContext)
                     <UserButton/>
                    </div>
                 :
-            <div className='flex gap-4 max-sm:text-xs'>
-               <button onClick={() => setShowRecruiterLogin(true)}className='bg-gray-200 text-gray-700 px-4 sm:px-6 py-1.5 sm:py-2 hover:bg-gray-300 rounded-full cursor-pointer'>Recruiter Login</button>
-                <button onClick={openSignIn} className='bg-blue-600 text-white px-4 sm:px-6 py-1.5 sm:py-2 hover:bg-blue-700 rounded-full cursor-pointer'>User Login</button>
+            <div className="flex gap-3 sm:gap-4 text-xs sm:text-base">
+               <button onClick={() => setShowRecruiterLogin(true)} className="bg-gray-200 text-gray-700 px-3 sm:px-6 py-2 sm:py-2 hover:bg-gray-300 rounded-full cursor-pointer">Recruiter Login</button>
+                <button onClick={openSignIn} className="bg-blue-600 text-white px-3 sm:px-6 py-2 sm:py-2 hover:bg-blue-700 rounded-full cursor-pointer">User Login</button>
             </div>
 
             }
