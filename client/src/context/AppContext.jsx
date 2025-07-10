@@ -88,7 +88,7 @@ export const AppContextProvider= (props)=>{
         try{
             const token = await getToken()
 
-            const {data} = await axios.get(backendUrl+'/api/users/user',{headers:{Authorization:`Bearer ${token}`}}) //authoriaztion clerk middleware krega
+            const {data} = await axios.get(backendUrl+'/api/users/user',{headers:{Authorization:`Bearer ${token}`}}) //authenticate clerk middleware krega
             if(data.success){
                 setUserData(data.user)
             }
