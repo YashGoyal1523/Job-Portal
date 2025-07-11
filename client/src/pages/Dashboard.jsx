@@ -87,10 +87,6 @@ useEffect(()=>{
     </div>
 
 
-
-
-
-
     </div>
   )
 }
