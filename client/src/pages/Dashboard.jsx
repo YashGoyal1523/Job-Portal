@@ -32,7 +32,7 @@ useEffect(()=>{
        {/* Navbar for recruiter panel */}
        <div className='shadow py-4'>
         <div className='px-5 flex justify-between items-center'>
-        <div onClick={() => navigate('/')} className="flex items-center gap-2 sm:gap-3 cursor-pointer">
+        <div className="flex items-center gap-2 sm:gap-3 cursor-pointer">
                                    <div className="w-7 h-7 sm:w-10 sm:h-10 bg-blue-600 rounded-full flex items-center justify-center">
                                        <FaUserTie className="text-white text-[13px] sm:text-[16px]" />
                                     </div>
