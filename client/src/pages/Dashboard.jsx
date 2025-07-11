@@ -27,7 +27,7 @@ useEffect(()=>{
 },[location.pathname])
 
 
-  return (
+  return(
     <div className='min-h-screen'>
        {/* Navbar for recruiter panel */}
        <div className='shadow py-4'>
